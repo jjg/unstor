@@ -1,10 +1,14 @@
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 
 void Pearson16(const unsigned char *x, size_t len, char *hex, size_t hexlen);
 void all_combinations( char* x, const int len, char *target_hash, char *match);
 
 int main(int argc, char *argv[]){
+
+  int total_hash_time = 0;
+  int total_generate_time = 0;
 
   // generate a hash of the supplied string
   char output_hash[8];
@@ -15,6 +19,7 @@ int main(int argc, char *argv[]){
   printf("Original input hash: %s\n", output_hash);
 
   printf("Thinking...\n");
+  int start_time = time(NULL);
 
   // loop through all possible input data to find 
   // data that returns a matching hash and track how
@@ -27,8 +32,10 @@ int main(int argc, char *argv[]){
     all_combinations(x, thislen-1, output_hash, match);
   }
 
-  printf("\nReconstituted original input: %s\n", match);
+  int end_time = time(NULL);
 
+  printf("\nReconstituted original input: %s\n", match);
+  printf("Elapsed time: %ds\n", end_time - start_time);
   return 0;
 }
 
