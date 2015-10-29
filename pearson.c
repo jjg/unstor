@@ -2,13 +2,13 @@
 
 void Pearson16(const unsigned char *x, size_t len, char *hex, size_t hexlen);
 
-int main(){
+int main(int argc, char *argv[]){
 
   size_t input_length = 4;
   char output[8];
   size_t output_length = 8;
 
-  Pearson16("bar", input_length, output, output_length);
+  Pearson16(argv[1], input_length, output, output_length);
 
   printf("output: %s\n", output);
 
