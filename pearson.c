@@ -2,7 +2,7 @@
 #include <string.h>
 
 void Pearson16(const unsigned char *x, size_t len, char *hex, size_t hexlen);
-void all_combinations( char* x, const int len, char *test, char *match);
+void all_combinations( char* x, const int len, char *target_hash, char *match);
 
 int main(int argc, char *argv[]){
 
@@ -12,7 +12,7 @@ int main(int argc, char *argv[]){
 
   Pearson16(argv[1], strlen(argv[1]), output_hash, output_len);
 
-  printf("output: %s\n", output_hash);
+  printf("output hash: %s\n", output_hash);
 
   // TODO: loop through all possible input data to find 
   // data that returns a matching hash and track how
@@ -22,7 +22,7 @@ int main(int argc, char *argv[]){
   char x[maxlen+1];
   for(int thislen=1; thislen <= maxlen; thislen++){
     x[thislen] = 0;
-    all_combinations(x, thislen-1, argv[1], match);
+    all_combinations(x, thislen-1, output_hash, match);
   }
 
   printf("original input: %s\n", match);
@@ -66,21 +66,24 @@ void Pearson16(const unsigned char *x, size_t len, char *hex, size_t hexlen) {
      hh[4], hh[5], hh[6], hh[7]);
 }
 
-void all_combinations( char* x, const int len, char* test, char* match )
+void all_combinations(char* x, const int len, char* target_hash, char* match)
 {
-  if(strncmp(x, test, strlen(test)) != 0){
-    for (char c = 97; c < 122; ++c){
-        x[len] = c;
-        if(len>0){
-            all_combinations( x, len - 1, test, match );
-        } else {
-            printf( "%s", x );
-            printf("\t%d\n", strncmp(x, test, strlen(test)));
-            if(strncmp(x, test, strlen(test)) == 0){
-              strcpy(match, x);
-              //break;
-            }
-        }
+  for (char c = 97; c < 122; ++c){
+    x[len] = c;
+    if(len>0){
+        all_combinations(x, len - 1, target_hash, match );
+    } else {
+      printf( "%s", x );
+      printf("\t%d\n", strncmp(x, target_hash, strlen(target_hash)));
+
+      // test input candidate
+      char test_hash[8];
+      size_t test_hash_len = 8;
+      Pearson16(x, strlen(x), test_hash, test_hash_len);
+
+      if(strncmp(test_hash, target_hash, strlen(test_hash)) == 0){
+        strcpy(match, x);
+      }
     }
   }
 }
