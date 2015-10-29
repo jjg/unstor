@@ -5,12 +5,12 @@ void Pearson16(const unsigned char *x, size_t len, char *hex, size_t hexlen);
 
 int main(int argc, char *argv[]){
 
-  char output[8];
+  char output_hash[8];
   size_t output_len = 8;
 
-  Pearson16(argv[1], strlen(argv[1]), output, output_len);
+  Pearson16(argv[1], strlen(argv[1]), output_hash, output_len);
 
-  printf("output: %s\n", output);
+  printf("output: %s\n", output_hash);
 
   return 0;
 }
