@@ -1,14 +1,14 @@
 #include <stdio.h>
+#include <string.h>
 
 void Pearson16(const unsigned char *x, size_t len, char *hex, size_t hexlen);
 
 int main(int argc, char *argv[]){
 
-  size_t input_length = 4;
   char output[8];
-  size_t output_length = 8;
+  size_t output_len = 8;
 
-  Pearson16(argv[1], input_length, output, output_length);
+  Pearson16(argv[1], strlen(argv[1]), output, output_len);
 
   printf("output: %s\n", output);
 
