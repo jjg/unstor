@@ -12,9 +12,11 @@ int main(int argc, char *argv[]){
 
   Pearson16(argv[1], strlen(argv[1]), output_hash, output_len);
 
-  printf("output hash: %s\n", output_hash);
+  printf("Original input hash: %s\n", output_hash);
 
-  // TODO: loop through all possible input data to find 
+  printf("Thinking...\n");
+
+  // loop through all possible input data to find 
   // data that returns a matching hash and track how
   // long this takes
   const int maxlen = strlen(argv[1]);
@@ -25,7 +27,7 @@ int main(int argc, char *argv[]){
     all_combinations(x, thislen-1, output_hash, match);
   }
 
-  printf("original input: %s\n", match);
+  printf("\nReconstituted original input: %s\n", match);
 
   return 0;
 }
@@ -73,8 +75,7 @@ void all_combinations(char* x, const int len, char* target_hash, char* match)
     if(len>0){
         all_combinations(x, len - 1, target_hash, match );
     } else {
-      printf( "%s", x );
-      printf("\t%d\n", strncmp(x, target_hash, strlen(target_hash)));
+      //printf("\t%d\n", strncmp(x, target_hash, strlen(target_hash)));
 
       // test input candidate
       char test_hash[8];
